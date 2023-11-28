@@ -1,0 +1,1453 @@
+
+state 0:
+
+	prog : . PROGRAM IDENTIFIER DBCOLON block 
+
+	PROGRAM	shift 1
+
+	prog	goto 87
+
+	.	error
+
+
+state 1:
+
+	prog : PROGRAM . IDENTIFIER DBCOLON block 
+
+	IDENTIFIER	shift 2
+
+
+	.	error
+
+
+state 2:
+
+	prog : PROGRAM IDENTIFIER . DBCOLON block 
+
+	DBCOLON	shift 3
+
+
+	.	error
+
+
+state 3:
+
+	prog : PROGRAM IDENTIFIER DBCOLON . block 
+
+	VAR	shift 6
+
+	block	goto 5
+	dec	goto 4
+
+	.	reduce by rule 3
+
+
+state 4:
+
+	block : dec . LBRACE cmdseq RBRACE 
+
+	LBRACE	shift 7
+
+
+	.	error
+
+
+state 5:
+
+	prog : PROGRAM IDENTIFIER DBCOLON block .  (reduce by rule 0)
+
+
+
+	.	reduce by rule 0
+
+
+state 6:
+
+	dec : VAR . varlist COLON Type SEMICOLON dec 
+
+	IDENTIFIER	shift 9
+
+	varlist	goto 8
+
+	.	error
+
+
+state 7:
+
+	block : dec LBRACE . cmdseq RBRACE 
+
+	IDENTIFIER	shift 16
+	READ	shift 15
+	WRITE	shift 14
+	IF	shift 13
+	WHILE	shift 12
+
+	cmdseq	goto 11
+	cmd	goto 10
+
+	.	reduce by rule 9
+
+
+state 8:
+
+	dec : VAR varlist . COLON Type SEMICOLON dec 
+
+	COLON	shift 17
+
+
+	.	error
+
+
+state 9:
+
+	varlist : IDENTIFIER . COMMA varlist 
+	varlist : IDENTIFIER .  (reduce by rule 5)
+
+	COMMA	shift 18
+
+
+	.	reduce by rule 5
+
+
+state 10:
+
+	cmdseq : cmd . SEMICOLON cmdseq 
+
+	SEMICOLON	shift 19
+
+
+	.	error
+
+
+state 11:
+
+	block : dec LBRACE cmdseq . RBRACE 
+
+	RBRACE	shift 20
+
+
+	.	error
+
+
+state 12:
+
+	cmd : WHILE . exp DO LBRACE cmdseq RBRACE ENDWH 
+
+	IDENTIFIER	shift 29
+	NUMERAL	shift 28
+	NOT	shift 27
+	PLUS	shift 26
+	TILDE	shift 25
+	TT	shift 24
+	FF	shift 23
+	LPAREN	shift 22
+
+	exp	goto 21
+
+	.	error
+
+
+state 13:
+
+	cmd : IF . exp THEN LBRACE cmdseq RBRACE ELSE LBRACE cmdseq RBRACE ENDIF 
+
+	IDENTIFIER	shift 29
+	NUMERAL	shift 28
+	NOT	shift 27
+	PLUS	shift 26
+	TILDE	shift 25
+	TT	shift 24
+	FF	shift 23
+	LPAREN	shift 22
+
+	exp	goto 30
+
+	.	error
+
+
+state 14:
+
+	cmd : WRITE . exp 
+
+	IDENTIFIER	shift 29
+	NUMERAL	shift 28
+	NOT	shift 27
+	PLUS	shift 26
+	TILDE	shift 25
+	TT	shift 24
+	FF	shift 23
+	LPAREN	shift 22
+
+	exp	goto 31
+
+	.	error
+
+
+state 15:
+
+	cmd : READ . IDENTIFIER 
+
+	IDENTIFIER	shift 32
+
+
+	.	error
+
+
+state 16:
+
+	cmd : IDENTIFIER . ASSIGN exp 
+
+	ASSIGN	shift 33
+
+
+	.	error
+
+
+state 17:
+
+	dec : VAR varlist COLON . Type SEMICOLON dec 
+
+	INT	shift 36
+	BOOL	shift 35
+
+	Type	goto 34
+
+	.	error
+
+
+state 18:
+
+	varlist : IDENTIFIER COMMA . varlist 
+
+	IDENTIFIER	shift 9
+
+	varlist	goto 37
+
+	.	error
+
+
+state 19:
+
+	cmdseq : cmd SEMICOLON . cmdseq 
+
+	IDENTIFIER	shift 16
+	READ	shift 15
+	WRITE	shift 14
+	IF	shift 13
+	WHILE	shift 12
+
+	cmdseq	goto 38
+	cmd	goto 10
+
+	.	reduce by rule 9
+
+
+state 20:
+
+	block : dec LBRACE cmdseq RBRACE .  (reduce by rule 1)
+
+
+
+	.	reduce by rule 1
+
+
+state 21:
+
+	cmd : WHILE exp . DO LBRACE cmdseq RBRACE ENDWH 
+	exp : exp . PLUS exp 
+	exp : exp . MINUS exp 
+	exp : exp . TIMES exp 
+	exp : exp . MOD exp 
+	exp : exp . DIV exp 
+	exp : exp . GT exp 
+	exp : exp . GEQ exp 
+	exp : exp . LT exp 
+	exp : exp . LEQ exp 
+	exp : exp . EQ exp 
+	exp : exp . NEQ exp 
+	exp : exp . AND exp 
+	exp : exp . OR exp 
+
+	AND	shift 52
+	OR	shift 51
+	EQ	shift 50
+	NEQ	shift 49
+	PLUS	shift 48
+	MINUS	shift 47
+	TIMES	shift 46
+	DIV	shift 45
+	MOD	shift 44
+	GT	shift 43
+	GEQ	shift 42
+	LEQ	shift 41
+	LT	shift 40
+	DO	shift 39
+
+
+	.	error
+
+
+state 22:
+
+	exp : LPAREN . exp RPAREN 
+
+	IDENTIFIER	shift 29
+	NUMERAL	shift 28
+	NOT	shift 27
+	PLUS	shift 26
+	TILDE	shift 25
+	TT	shift 24
+	FF	shift 23
+	LPAREN	shift 22
+
+	exp	goto 53
+
+	.	error
+
+
+state 23:
+
+	exp : FF .  (reduce by rule 16)
+
+
+
+	.	reduce by rule 16
+
+
+state 24:
+
+	exp : TT .  (reduce by rule 15)
+
+
+
+	.	reduce by rule 15
+
+
+state 25:
+
+	exp : TILDE . exp 
+
+	IDENTIFIER	shift 29
+	NUMERAL	shift 28
+	NOT	shift 27
+	PLUS	shift 26
+	TILDE	shift 25
+	TT	shift 24
+	FF	shift 23
+	LPAREN	shift 22
+
+	exp	goto 54
+
+	.	error
+
+
+state 26:
+
+	exp : PLUS . NUMERAL 
+
+	NUMERAL	shift 55
+
+
+	.	error
+
+
+state 27:
+
+	exp : NOT . exp 
+
+	IDENTIFIER	shift 29
+	NUMERAL	shift 28
+	NOT	shift 27
+	PLUS	shift 26
+	TILDE	shift 25
+	TT	shift 24
+	FF	shift 23
+	LPAREN	shift 22
+
+	exp	goto 56
+
+	.	error
+
+
+state 28:
+
+	exp : NUMERAL .  (reduce by rule 17)
+
+
+
+	.	reduce by rule 17
+
+
+state 29:
+
+	exp : IDENTIFIER .  (reduce by rule 19)
+
+
+
+	.	reduce by rule 19
+
+
+state 30:
+
+	cmd : IF exp . THEN LBRACE cmdseq RBRACE ELSE LBRACE cmdseq RBRACE ENDIF 
+	exp : exp . PLUS exp 
+	exp : exp . MINUS exp 
+	exp : exp . TIMES exp 
+	exp : exp . MOD exp 
+	exp : exp . DIV exp 
+	exp : exp . GT exp 
+	exp : exp . GEQ exp 
+	exp : exp . LT exp 
+	exp : exp . LEQ exp 
+	exp : exp . EQ exp 
+	exp : exp . NEQ exp 
+	exp : exp . AND exp 
+	exp : exp . OR exp 
+
+	AND	shift 52
+	OR	shift 51
+	EQ	shift 50
+	NEQ	shift 49
+	PLUS	shift 48
+	MINUS	shift 47
+	TIMES	shift 46
+	DIV	shift 45
+	MOD	shift 44
+	GT	shift 43
+	GEQ	shift 42
+	LEQ	shift 41
+	LT	shift 40
+	THEN	shift 57
+
+
+	.	error
+
+
+state 31:
+
+	cmd : WRITE exp .  (reduce by rule 12)
+	exp : exp . PLUS exp 
+	exp : exp . MINUS exp 
+	exp : exp . TIMES exp 
+	exp : exp . MOD exp 
+	exp : exp . DIV exp 
+	exp : exp . GT exp 
+	exp : exp . GEQ exp 
+	exp : exp . LT exp 
+	exp : exp . LEQ exp 
+	exp : exp . EQ exp 
+	exp : exp . NEQ exp 
+	exp : exp . AND exp 
+	exp : exp . OR exp 
+
+	AND	shift 52
+	OR	shift 51
+	EQ	shift 50
+	NEQ	shift 49
+	PLUS	shift 48
+	MINUS	shift 47
+	TIMES	shift 46
+	DIV	shift 45
+	MOD	shift 44
+	GT	shift 43
+	GEQ	shift 42
+	LEQ	shift 41
+	LT	shift 40
+
+
+	.	reduce by rule 12
+
+
+state 32:
+
+	cmd : READ IDENTIFIER .  (reduce by rule 11)
+
+
+
+	.	reduce by rule 11
+
+
+state 33:
+
+	cmd : IDENTIFIER ASSIGN . exp 
+
+	IDENTIFIER	shift 29
+	NUMERAL	shift 28
+	NOT	shift 27
+	PLUS	shift 26
+	TILDE	shift 25
+	TT	shift 24
+	FF	shift 23
+	LPAREN	shift 22
+
+	exp	goto 58
+
+	.	error
+
+
+state 34:
+
+	dec : VAR varlist COLON Type . SEMICOLON dec 
+
+	SEMICOLON	shift 59
+
+
+	.	error
+
+
+state 35:
+
+	Type : BOOL .  (reduce by rule 7)
+
+
+
+	.	reduce by rule 7
+
+
+state 36:
+
+	Type : INT .  (reduce by rule 6)
+
+
+
+	.	reduce by rule 6
+
+
+state 37:
+
+	varlist : IDENTIFIER COMMA varlist .  (reduce by rule 4)
+
+
+
+	.	reduce by rule 4
+
+
+state 38:
+
+	cmdseq : cmd SEMICOLON cmdseq .  (reduce by rule 8)
+
+
+
+	.	reduce by rule 8
+
+
+state 39:
+
+	cmd : WHILE exp DO . LBRACE cmdseq RBRACE ENDWH 
+
+	LBRACE	shift 60
+
+
+	.	error
+
+
+state 40:
+
+	exp : exp LT . exp 
+
+	IDENTIFIER	shift 29
+	NUMERAL	shift 28
+	NOT	shift 27
+	PLUS	shift 26
+	TILDE	shift 25
+	TT	shift 24
+	FF	shift 23
+	LPAREN	shift 22
+
+	exp	goto 61
+
+	.	error
+
+
+state 41:
+
+	exp : exp LEQ . exp 
+
+	IDENTIFIER	shift 29
+	NUMERAL	shift 28
+	NOT	shift 27
+	PLUS	shift 26
+	TILDE	shift 25
+	TT	shift 24
+	FF	shift 23
+	LPAREN	shift 22
+
+	exp	goto 62
+
+	.	error
+
+
+state 42:
+
+	exp : exp GEQ . exp 
+
+	IDENTIFIER	shift 29
+	NUMERAL	shift 28
+	NOT	shift 27
+	PLUS	shift 26
+	TILDE	shift 25
+	TT	shift 24
+	FF	shift 23
+	LPAREN	shift 22
+
+	exp	goto 63
+
+	.	error
+
+
+state 43:
+
+	exp : exp GT . exp 
+
+	IDENTIFIER	shift 29
+	NUMERAL	shift 28
+	NOT	shift 27
+	PLUS	shift 26
+	TILDE	shift 25
+	TT	shift 24
+	FF	shift 23
+	LPAREN	shift 22
+
+	exp	goto 64
+
+	.	error
+
+
+state 44:
+
+	exp : exp MOD . exp 
+
+	IDENTIFIER	shift 29
+	NUMERAL	shift 28
+	NOT	shift 27
+	PLUS	shift 26
+	TILDE	shift 25
+	TT	shift 24
+	FF	shift 23
+	LPAREN	shift 22
+
+	exp	goto 65
+
+	.	error
+
+
+state 45:
+
+	exp : exp DIV . exp 
+
+	IDENTIFIER	shift 29
+	NUMERAL	shift 28
+	NOT	shift 27
+	PLUS	shift 26
+	TILDE	shift 25
+	TT	shift 24
+	FF	shift 23
+	LPAREN	shift 22
+
+	exp	goto 66
+
+	.	error
+
+
+state 46:
+
+	exp : exp TIMES . exp 
+
+	IDENTIFIER	shift 29
+	NUMERAL	shift 28
+	NOT	shift 27
+	PLUS	shift 26
+	TILDE	shift 25
+	TT	shift 24
+	FF	shift 23
+	LPAREN	shift 22
+
+	exp	goto 67
+
+	.	error
+
+
+state 47:
+
+	exp : exp MINUS . exp 
+
+	IDENTIFIER	shift 29
+	NUMERAL	shift 28
+	NOT	shift 27
+	PLUS	shift 26
+	TILDE	shift 25
+	TT	shift 24
+	FF	shift 23
+	LPAREN	shift 22
+
+	exp	goto 68
+
+	.	error
+
+
+state 48:
+
+	exp : exp PLUS . exp 
+
+	IDENTIFIER	shift 29
+	NUMERAL	shift 28
+	NOT	shift 27
+	PLUS	shift 26
+	TILDE	shift 25
+	TT	shift 24
+	FF	shift 23
+	LPAREN	shift 22
+
+	exp	goto 69
+
+	.	error
+
+
+state 49:
+
+	exp : exp NEQ . exp 
+
+	IDENTIFIER	shift 29
+	NUMERAL	shift 28
+	NOT	shift 27
+	PLUS	shift 26
+	TILDE	shift 25
+	TT	shift 24
+	FF	shift 23
+	LPAREN	shift 22
+
+	exp	goto 70
+
+	.	error
+
+
+state 50:
+
+	exp : exp EQ . exp 
+
+	IDENTIFIER	shift 29
+	NUMERAL	shift 28
+	NOT	shift 27
+	PLUS	shift 26
+	TILDE	shift 25
+	TT	shift 24
+	FF	shift 23
+	LPAREN	shift 22
+
+	exp	goto 71
+
+	.	error
+
+
+state 51:
+
+	exp : exp OR . exp 
+
+	IDENTIFIER	shift 29
+	NUMERAL	shift 28
+	NOT	shift 27
+	PLUS	shift 26
+	TILDE	shift 25
+	TT	shift 24
+	FF	shift 23
+	LPAREN	shift 22
+
+	exp	goto 72
+
+	.	error
+
+
+state 52:
+
+	exp : exp AND . exp 
+
+	IDENTIFIER	shift 29
+	NUMERAL	shift 28
+	NOT	shift 27
+	PLUS	shift 26
+	TILDE	shift 25
+	TT	shift 24
+	FF	shift 23
+	LPAREN	shift 22
+
+	exp	goto 73
+
+	.	error
+
+
+state 53:
+
+	exp : exp . PLUS exp 
+	exp : exp . MINUS exp 
+	exp : exp . TIMES exp 
+	exp : exp . MOD exp 
+	exp : exp . DIV exp 
+	exp : exp . GT exp 
+	exp : exp . GEQ exp 
+	exp : exp . LT exp 
+	exp : exp . LEQ exp 
+	exp : exp . EQ exp 
+	exp : exp . NEQ exp 
+	exp : exp . AND exp 
+	exp : exp . OR exp 
+	exp : LPAREN exp . RPAREN 
+
+	AND	shift 52
+	OR	shift 51
+	EQ	shift 50
+	NEQ	shift 49
+	PLUS	shift 48
+	MINUS	shift 47
+	TIMES	shift 46
+	DIV	shift 45
+	MOD	shift 44
+	GT	shift 43
+	GEQ	shift 42
+	LEQ	shift 41
+	LT	shift 40
+	RPAREN	shift 74
+
+
+	.	error
+
+
+state 54:
+
+	exp : exp . PLUS exp 
+	exp : exp . MINUS exp 
+	exp : exp . TIMES exp 
+	exp : exp . MOD exp 
+	exp : exp . DIV exp 
+	exp : exp . GT exp 
+	exp : exp . GEQ exp 
+	exp : exp . LT exp 
+	exp : exp . LEQ exp 
+	exp : exp . EQ exp 
+	exp : exp . NEQ exp 
+	exp : exp . AND exp 
+	exp : exp . OR exp 
+	exp : TILDE exp .  (reduce by rule 33)
+
+
+
+	.	reduce by rule 33
+
+
+state 55:
+
+	exp : PLUS NUMERAL .  (reduce by rule 18)
+
+
+
+	.	reduce by rule 18
+
+
+state 56:
+
+	exp : exp . PLUS exp 
+	exp : exp . MINUS exp 
+	exp : exp . TIMES exp 
+	exp : exp . MOD exp 
+	exp : exp . DIV exp 
+	exp : exp . GT exp 
+	exp : exp . GEQ exp 
+	exp : exp . LT exp 
+	exp : exp . LEQ exp 
+	exp : exp . EQ exp 
+	exp : exp . NEQ exp 
+	exp : exp . AND exp 
+	exp : exp . OR exp 
+	exp : NOT exp .  (reduce by rule 35)
+
+	EQ	shift 50
+	NEQ	shift 49
+	PLUS	shift 48
+	MINUS	shift 47
+	TIMES	shift 46
+	DIV	shift 45
+	MOD	shift 44
+	GT	shift 43
+	GEQ	shift 42
+	LEQ	shift 41
+	LT	shift 40
+
+
+	.	reduce by rule 35
+
+
+state 57:
+
+	cmd : IF exp THEN . LBRACE cmdseq RBRACE ELSE LBRACE cmdseq RBRACE ENDIF 
+
+	LBRACE	shift 75
+
+
+	.	error
+
+
+state 58:
+
+	cmd : IDENTIFIER ASSIGN exp .  (reduce by rule 10)
+	exp : exp . PLUS exp 
+	exp : exp . MINUS exp 
+	exp : exp . TIMES exp 
+	exp : exp . MOD exp 
+	exp : exp . DIV exp 
+	exp : exp . GT exp 
+	exp : exp . GEQ exp 
+	exp : exp . LT exp 
+	exp : exp . LEQ exp 
+	exp : exp . EQ exp 
+	exp : exp . NEQ exp 
+	exp : exp . AND exp 
+	exp : exp . OR exp 
+
+	AND	shift 52
+	OR	shift 51
+	EQ	shift 50
+	NEQ	shift 49
+	PLUS	shift 48
+	MINUS	shift 47
+	TIMES	shift 46
+	DIV	shift 45
+	MOD	shift 44
+	GT	shift 43
+	GEQ	shift 42
+	LEQ	shift 41
+	LT	shift 40
+
+
+	.	reduce by rule 10
+
+
+state 59:
+
+	dec : VAR varlist COLON Type SEMICOLON . dec 
+
+	VAR	shift 6
+
+	dec	goto 76
+
+	.	reduce by rule 3
+
+
+state 60:
+
+	cmd : WHILE exp DO LBRACE . cmdseq RBRACE ENDWH 
+
+	IDENTIFIER	shift 16
+	READ	shift 15
+	WRITE	shift 14
+	IF	shift 13
+	WHILE	shift 12
+
+	cmdseq	goto 77
+	cmd	goto 10
+
+	.	reduce by rule 9
+
+
+state 61:
+
+	exp : exp . PLUS exp 
+	exp : exp . MINUS exp 
+	exp : exp . TIMES exp 
+	exp : exp . MOD exp 
+	exp : exp . DIV exp 
+	exp : exp . GT exp 
+	exp : exp . GEQ exp 
+	exp : exp . LT exp 
+	exp : exp LT exp .  (reduce by rule 27)
+	exp : exp . LEQ exp 
+	exp : exp . EQ exp 
+	exp : exp . NEQ exp 
+	exp : exp . AND exp 
+	exp : exp . OR exp 
+
+	PLUS	shift 48
+	MINUS	shift 47
+	TIMES	shift 46
+	DIV	shift 45
+	MOD	shift 44
+
+
+	.	reduce by rule 27
+
+
+state 62:
+
+	exp : exp . PLUS exp 
+	exp : exp . MINUS exp 
+	exp : exp . TIMES exp 
+	exp : exp . MOD exp 
+	exp : exp . DIV exp 
+	exp : exp . GT exp 
+	exp : exp . GEQ exp 
+	exp : exp . LT exp 
+	exp : exp . LEQ exp 
+	exp : exp LEQ exp .  (reduce by rule 28)
+	exp : exp . EQ exp 
+	exp : exp . NEQ exp 
+	exp : exp . AND exp 
+	exp : exp . OR exp 
+
+	PLUS	shift 48
+	MINUS	shift 47
+	TIMES	shift 46
+	DIV	shift 45
+	MOD	shift 44
+
+
+	.	reduce by rule 28
+
+
+state 63:
+
+	exp : exp . PLUS exp 
+	exp : exp . MINUS exp 
+	exp : exp . TIMES exp 
+	exp : exp . MOD exp 
+	exp : exp . DIV exp 
+	exp : exp . GT exp 
+	exp : exp . GEQ exp 
+	exp : exp GEQ exp .  (reduce by rule 26)
+	exp : exp . LT exp 
+	exp : exp . LEQ exp 
+	exp : exp . EQ exp 
+	exp : exp . NEQ exp 
+	exp : exp . AND exp 
+	exp : exp . OR exp 
+
+	PLUS	shift 48
+	MINUS	shift 47
+	TIMES	shift 46
+	DIV	shift 45
+	MOD	shift 44
+
+
+	.	reduce by rule 26
+
+
+state 64:
+
+	exp : exp . PLUS exp 
+	exp : exp . MINUS exp 
+	exp : exp . TIMES exp 
+	exp : exp . MOD exp 
+	exp : exp . DIV exp 
+	exp : exp . GT exp 
+	exp : exp GT exp .  (reduce by rule 25)
+	exp : exp . GEQ exp 
+	exp : exp . LT exp 
+	exp : exp . LEQ exp 
+	exp : exp . EQ exp 
+	exp : exp . NEQ exp 
+	exp : exp . AND exp 
+	exp : exp . OR exp 
+
+	PLUS	shift 48
+	MINUS	shift 47
+	TIMES	shift 46
+	DIV	shift 45
+	MOD	shift 44
+
+
+	.	reduce by rule 25
+
+
+state 65:
+
+	exp : exp . PLUS exp 
+	exp : exp . MINUS exp 
+	exp : exp . TIMES exp 
+	exp : exp . MOD exp 
+	exp : exp MOD exp .  (reduce by rule 23)
+	exp : exp . DIV exp 
+	exp : exp . GT exp 
+	exp : exp . GEQ exp 
+	exp : exp . LT exp 
+	exp : exp . LEQ exp 
+	exp : exp . EQ exp 
+	exp : exp . NEQ exp 
+	exp : exp . AND exp 
+	exp : exp . OR exp 
+
+
+
+	.	reduce by rule 23
+
+
+state 66:
+
+	exp : exp . PLUS exp 
+	exp : exp . MINUS exp 
+	exp : exp . TIMES exp 
+	exp : exp . MOD exp 
+	exp : exp . DIV exp 
+	exp : exp DIV exp .  (reduce by rule 24)
+	exp : exp . GT exp 
+	exp : exp . GEQ exp 
+	exp : exp . LT exp 
+	exp : exp . LEQ exp 
+	exp : exp . EQ exp 
+	exp : exp . NEQ exp 
+	exp : exp . AND exp 
+	exp : exp . OR exp 
+
+
+
+	.	reduce by rule 24
+
+
+state 67:
+
+	exp : exp . PLUS exp 
+	exp : exp . MINUS exp 
+	exp : exp . TIMES exp 
+	exp : exp TIMES exp .  (reduce by rule 22)
+	exp : exp . MOD exp 
+	exp : exp . DIV exp 
+	exp : exp . GT exp 
+	exp : exp . GEQ exp 
+	exp : exp . LT exp 
+	exp : exp . LEQ exp 
+	exp : exp . EQ exp 
+	exp : exp . NEQ exp 
+	exp : exp . AND exp 
+	exp : exp . OR exp 
+
+	DIV	shift 45
+	MOD	shift 44
+
+
+	.	reduce by rule 22
+
+
+state 68:
+
+	exp : exp . PLUS exp 
+	exp : exp . MINUS exp 
+	exp : exp MINUS exp .  (reduce by rule 21)
+	exp : exp . TIMES exp 
+	exp : exp . MOD exp 
+	exp : exp . DIV exp 
+	exp : exp . GT exp 
+	exp : exp . GEQ exp 
+	exp : exp . LT exp 
+	exp : exp . LEQ exp 
+	exp : exp . EQ exp 
+	exp : exp . NEQ exp 
+	exp : exp . AND exp 
+	exp : exp . OR exp 
+
+	PLUS	shift 48
+	TIMES	shift 46
+	DIV	shift 45
+	MOD	shift 44
+
+
+	.	reduce by rule 21
+
+
+state 69:
+
+	exp : exp . PLUS exp 
+	exp : exp PLUS exp .  (reduce by rule 20)
+	exp : exp . MINUS exp 
+	exp : exp . TIMES exp 
+	exp : exp . MOD exp 
+	exp : exp . DIV exp 
+	exp : exp . GT exp 
+	exp : exp . GEQ exp 
+	exp : exp . LT exp 
+	exp : exp . LEQ exp 
+	exp : exp . EQ exp 
+	exp : exp . NEQ exp 
+	exp : exp . AND exp 
+	exp : exp . OR exp 
+
+	TIMES	shift 46
+	DIV	shift 45
+	MOD	shift 44
+
+
+	.	reduce by rule 20
+
+
+state 70:
+
+	exp : exp . PLUS exp 
+	exp : exp . MINUS exp 
+	exp : exp . TIMES exp 
+	exp : exp . MOD exp 
+	exp : exp . DIV exp 
+	exp : exp . GT exp 
+	exp : exp . GEQ exp 
+	exp : exp . LT exp 
+	exp : exp . LEQ exp 
+	exp : exp . EQ exp 
+	exp : exp . NEQ exp 
+	exp : exp NEQ exp .  (reduce by rule 30)
+	exp : exp . AND exp 
+	exp : exp . OR exp 
+
+	PLUS	shift 48
+	MINUS	shift 47
+	TIMES	shift 46
+	DIV	shift 45
+	MOD	shift 44
+	GT	shift 43
+	GEQ	shift 42
+	LEQ	shift 41
+	LT	shift 40
+
+
+	.	reduce by rule 30
+
+
+state 71:
+
+	exp : exp . PLUS exp 
+	exp : exp . MINUS exp 
+	exp : exp . TIMES exp 
+	exp : exp . MOD exp 
+	exp : exp . DIV exp 
+	exp : exp . GT exp 
+	exp : exp . GEQ exp 
+	exp : exp . LT exp 
+	exp : exp . LEQ exp 
+	exp : exp . EQ exp 
+	exp : exp EQ exp .  (reduce by rule 29)
+	exp : exp . NEQ exp 
+	exp : exp . AND exp 
+	exp : exp . OR exp 
+
+	PLUS	shift 48
+	MINUS	shift 47
+	TIMES	shift 46
+	DIV	shift 45
+	MOD	shift 44
+	GT	shift 43
+	GEQ	shift 42
+	LEQ	shift 41
+	LT	shift 40
+
+
+	.	reduce by rule 29
+
+
+state 72:
+
+	exp : exp . PLUS exp 
+	exp : exp . MINUS exp 
+	exp : exp . TIMES exp 
+	exp : exp . MOD exp 
+	exp : exp . DIV exp 
+	exp : exp . GT exp 
+	exp : exp . GEQ exp 
+	exp : exp . LT exp 
+	exp : exp . LEQ exp 
+	exp : exp . EQ exp 
+	exp : exp . NEQ exp 
+	exp : exp . AND exp 
+	exp : exp . OR exp 
+	exp : exp OR exp .  (reduce by rule 32)
+
+	AND	shift 52
+	EQ	shift 50
+	NEQ	shift 49
+	PLUS	shift 48
+	MINUS	shift 47
+	TIMES	shift 46
+	DIV	shift 45
+	MOD	shift 44
+	GT	shift 43
+	GEQ	shift 42
+	LEQ	shift 41
+	LT	shift 40
+
+
+	.	reduce by rule 32
+
+
+state 73:
+
+	exp : exp . PLUS exp 
+	exp : exp . MINUS exp 
+	exp : exp . TIMES exp 
+	exp : exp . MOD exp 
+	exp : exp . DIV exp 
+	exp : exp . GT exp 
+	exp : exp . GEQ exp 
+	exp : exp . LT exp 
+	exp : exp . LEQ exp 
+	exp : exp . EQ exp 
+	exp : exp . NEQ exp 
+	exp : exp . AND exp 
+	exp : exp AND exp .  (reduce by rule 31)
+	exp : exp . OR exp 
+
+	EQ	shift 50
+	NEQ	shift 49
+	PLUS	shift 48
+	MINUS	shift 47
+	TIMES	shift 46
+	DIV	shift 45
+	MOD	shift 44
+	GT	shift 43
+	GEQ	shift 42
+	LEQ	shift 41
+	LT	shift 40
+
+
+	.	reduce by rule 31
+
+
+state 74:
+
+	exp : LPAREN exp RPAREN .  (reduce by rule 34)
+
+
+
+	.	reduce by rule 34
+
+
+state 75:
+
+	cmd : IF exp THEN LBRACE . cmdseq RBRACE ELSE LBRACE cmdseq RBRACE ENDIF 
+
+	IDENTIFIER	shift 16
+	READ	shift 15
+	WRITE	shift 14
+	IF	shift 13
+	WHILE	shift 12
+
+	cmdseq	goto 78
+	cmd	goto 10
+
+	.	reduce by rule 9
+
+
+state 76:
+
+	dec : VAR varlist COLON Type SEMICOLON dec .  (reduce by rule 2)
+
+
+
+	.	reduce by rule 2
+
+
+state 77:
+
+	cmd : WHILE exp DO LBRACE cmdseq . RBRACE ENDWH 
+
+	RBRACE	shift 79
+
+
+	.	error
+
+
+state 78:
+
+	cmd : IF exp THEN LBRACE cmdseq . RBRACE ELSE LBRACE cmdseq RBRACE ENDIF 
+
+	RBRACE	shift 80
+
+
+	.	error
+
+
+state 79:
+
+	cmd : WHILE exp DO LBRACE cmdseq RBRACE . ENDWH 
+
+	ENDWH	shift 81
+
+
+	.	error
+
+
+state 80:
+
+	cmd : IF exp THEN LBRACE cmdseq RBRACE . ELSE LBRACE cmdseq RBRACE ENDIF 
+
+	ELSE	shift 82
+
+
+	.	error
+
+
+state 81:
+
+	cmd : WHILE exp DO LBRACE cmdseq RBRACE ENDWH .  (reduce by rule 14)
+
+
+
+	.	reduce by rule 14
+
+
+state 82:
+
+	cmd : IF exp THEN LBRACE cmdseq RBRACE ELSE . LBRACE cmdseq RBRACE ENDIF 
+
+	LBRACE	shift 83
+
+
+	.	error
+
+
+state 83:
+
+	cmd : IF exp THEN LBRACE cmdseq RBRACE ELSE LBRACE . cmdseq RBRACE ENDIF 
+
+	IDENTIFIER	shift 16
+	READ	shift 15
+	WRITE	shift 14
+	IF	shift 13
+	WHILE	shift 12
+
+	cmdseq	goto 84
+	cmd	goto 10
+
+	.	reduce by rule 9
+
+
+state 84:
+
+	cmd : IF exp THEN LBRACE cmdseq RBRACE ELSE LBRACE cmdseq . RBRACE ENDIF 
+
+	RBRACE	shift 85
+
+
+	.	error
+
+
+state 85:
+
+	cmd : IF exp THEN LBRACE cmdseq RBRACE ELSE LBRACE cmdseq RBRACE . ENDIF 
+
+	ENDIF	shift 86
+
+
+	.	error
+
+
+state 86:
+
+	cmd : IF exp THEN LBRACE cmdseq RBRACE ELSE LBRACE cmdseq RBRACE ENDIF .  (reduce by rule 13)
+
+
+
+	.	reduce by rule 13
+
+
+state 87:
+
+
+	EOF	accept
+
+
+	.	error
+
+188 of 450 action table entries left after compaction
+37 goto table entries

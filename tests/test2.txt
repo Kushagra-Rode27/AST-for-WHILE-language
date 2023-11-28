@@ -1,0 +1,12 @@
+program good ::
+
+    var A, B, C, D : bool;
+    var E,F : bool;
+    var G2 : int;
+
+{
+    F := A && B || C && !D;
+    while C do 
+        {G2 := 3*4 + 4 ;}
+     endwh ;
+}

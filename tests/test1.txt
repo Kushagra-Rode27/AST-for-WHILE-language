@@ -1,0 +1,9 @@
+program go23D ::
+
+    var A, B, C, D : int;
+    var E,F : int;
+{
+    E := F + 3 - E % 2 / F;
+    A := ~A * +5;
+    C := 3*4+~4;
+}

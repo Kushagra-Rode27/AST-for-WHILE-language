@@ -1,0 +1,16 @@
+program testProg ::
+
+    var A, B, C, X : int;
+    var E , F : bool;
+
+{
+    read X;
+    write C*X + 3;
+    if E || F then {
+        C := C + 1;
+    }
+    else{
+        E := tt < E;
+    }
+    endif;
+}

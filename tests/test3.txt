@@ -1,0 +1,7 @@
+program bESt ::
+
+    var A : bool;
+    var E : int;
+{
+    A := ff < (0 < 1);
+}
